@@ -1,0 +1,136 @@
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+
+
+<script src="{{ 'featured-products.js' | asset_url }}" defer="defer"></script>
+
+{%- if section.settings.quick_add != 'none' -%}
+  {{ 'quick-add.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+{%- liquid
+  assign selected_collection = collections[section.settings.collection]
+  assign cart_product_ids = cart.items | map: 'product_id'
+-%}
+
+<featured-products data-section-id="{{ section.id }}" data-section-url="{{ section.url }}">
+  <section class="featured-products section-{{ section.id }}">
+    <div class="featured-products__header">
+      <h2 class="featured-products__title">{{ section.settings.title }}</h2>
+      {% if section.settings.show_view_all %}
+        <a href="{{ section.settings.collection.url }}" class="featured-products__button"> View All </a>
+      {% endif %}
+    </div>
+
+    {% if selected_collection != blank %}
+      <ul class="featured-products__list">
+        {% for product in section.settings.collection.products %}
+          {% unless cart_product_ids contains product.id %}
+            <li class="featured-products__item">
+              <a href="{{ product.url }}" class="featured-products__link">
+                <img
+                    src="{{ product.featured_image | image_url: width: 360 }}"
+                    class="featured-products__image"
+                    alt="{{ product.title }}"
+                    width="520"
+                    height="340"
+                    srcset="
+                      {{ product.featured_image | image_url: width: 180 }} 180w,
+                      {{ product.featured_image | image_url: width: 360 }} 360w,
+                      {{ product.featured_image | image_url: width: 720 }} 720w
+                    "
+                    sizes="(max-width: 600px) 180px, (max-width: 1200px) 360px, 720px"
+                    loading="lazy"
+                  >
+                  <p class="featured-products__name">{{ product.title }}</p>
+                  <button
+                  class="featured-products__add-to-cart"
+                  data-add-to-cart
+                  data-id="{{ product.selected_or_first_available_variant.id }}"
+                >
+                  Add to cart - {{ product.price | money }}
+                </button>
+              </a>
+            </li>
+          {% endunless %}
+        {% endfor %}
+      </ul>
+      <div class="featured-products__grid grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down">
+        {% for product in selected_collection.products limit: section.settings.products_to_show %}
+          {% unless cart_product_ids contains product.id %}
+            <div class="grid__item featured-products__item">
+              <div class="card-product">
+                <a href="{{ product.url }}">
+                  <img
+                    src="{{ product.featured_image | image_url: width: 360 }}"
+                    alt="{{ product.title }}"
+                    width="520"
+                    height="340"
+                    srcset="
+                      {{ product.featured_image | image_url: width: 180 }} 180w,
+                      {{ product.featured_image | image_url: width: 360 }} 360w,
+                      {{ product.featured_image | image_url: width: 720 }} 720w
+                    "
+                    sizes="(max-width: 600px) 180px, (max-width: 1200px) 360px, 720px"
+                    loading="lazy"
+                  >
+                  <p>{{ product.title }}</p>
+                </a>
+                <button
+                  class="button"
+                  data-add-to-cart
+                  data-id="{{ product.selected_or_first_available_variant.id }}"
+                >
+                  Add to cart - {{ product.price | money }}
+                </button>
+              </div>
+            </div>
+          {% endunless %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>No collection selected.</p>
+    {% endif %}
+  </section>
+</featured-products>
+
+{% schema %}
+{
+  "name": "Featured Products",
+  "settings": [
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "text", "id": "title", "default": "Recommended Products", "label": "Title" },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4,
+      "label": "Products to show"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4,
+      "label": "Columns desktop"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns mobile",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "2"
+    }
+  ],
+  "presets": [{ "name": "Featured Products" }]
+}
+{% endschema %}
