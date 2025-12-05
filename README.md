@@ -14,19 +14,28 @@
 ├─ config/ # конфігурація теми
 └─ README.md
 
+## Використання секції Featured Products
+- Перейти до адмінки Shopify → Online Store → Themes → Customize
+- Додати секцію **Featured Products** на головну сторінку
+- Налаштувати:
+  - Колекцію товарів
+  - Кількість товарів
+  - Кількість колонок для desktop і mobile
 
 ## Встановлення та dev environment
 
 1. Клонувати репозиторій:
 ```bash
-git clone https://github.com/username/shopify-featured-products-theme.git
+git clone https://github.com/tetiana-404/shopify-featured-products-theme.git
 cd shopify-featured-products-theme
 
 2. Встановити Shopify CLI (якщо ще не встановлено):
 npm install -g @shopify/cli @shopify/theme
 
 3. Логін у свій Shopify акаунт:
-shopify login --store your-store-name.myshopify.com
+shopify login --store 28wszw-ry.myshopify.com
 
 4. Запуск dev environment для локальної роботи з темою:
 shopify theme dev
+
+
