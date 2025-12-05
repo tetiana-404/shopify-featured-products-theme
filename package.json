@@ -1,0 +1,17 @@
+{
+  "name": "shopify-featured-products-theme",
+  "version": "1.0.0",
+  "description": "Featured Products theme for Shopify",
+  "scripts": {
+    "dev": "sass --watch assets/featured-products.scss:assets/featured-products.css",
+    "build": "sass assets/featured-products.scss assets/featured-products.css"
+  },
+  "devDependencies": {
+    "css-loader": "^6.8.1",
+    "mini-css-extract-plugin": "^2.7.6",
+    "sass": "^1.94.2",
+    "sass-loader": "^13.3.2",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  }
+}

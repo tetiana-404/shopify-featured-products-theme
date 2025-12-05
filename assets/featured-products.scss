@@ -12,7 +12,7 @@
   &__title {
     font-size: 1.75rem;
     font-weight: 700;
-    color: #111;
+    color: #656874;
   }
 
   &__button {
@@ -45,7 +45,8 @@
     flex-direction: column;
     text-align: center;
     position: relative;
-    transition: transform 0.2s;
+    opacity: 0;           
+    transition: opacity 0.5s ease, transform 1s ease;
 
     &:hover {
       transform: translateY(-2px);
@@ -82,15 +83,17 @@
   }
 
   &__add-to-cart {
-    background-color: #0071e3;
+    background-color: #464B90;
     color: #fff;
     border: none;
-    padding: 0.5rem 1rem;
-    font-weight: 600;
-    border-radius: 4px;
+    display:flex;
+    justify-content:center;
+    padding: 1.5rem 1rem;
+    font-weight: 500;
+    border-radius: 40px;
     cursor: pointer;
     transition: background-color 0.2s;
-    width: 100%;
+    width: 60%;
 
     &:hover {
       background-color: #005bb5;
