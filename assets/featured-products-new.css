@@ -20,8 +20,7 @@
 .featured-products__title {
   font-weight: 900;
   text-align:center;
-  color: red;
-  /* color:#656874; */
+  color:#656874;
 }
 
 .featured-products__button {
