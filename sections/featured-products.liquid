@@ -33,7 +33,8 @@
 <featured-products data-section-id="{{ section.id }}" data-section-url="{{ section.url }}">
   <div class="collection__title title-wrapper title-wrapper--no-top-margin page-width">
     <div class="featured-products__header">
-      <h2 class="featured-products__title inline-richtext {{ section.settings.heading_size }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <h2 class="featured-products__title inline-richtext {{ section.settings.heading_size }}
+        {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
           {{ section.settings.title }}
         </h2>
       {% if section.settings.show_view_all %}
@@ -51,7 +52,8 @@
               <a href="{{ product.url }}" class="featured-products__link">
                 <img
                     src="{{ product.featured_image | image_url: width: 360 }}"
-                    class="featured-products__image"
+                    class="featured-products__image 
+                      {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
                     alt="{{ product.title }}"
                     width="520"
                     height="340"

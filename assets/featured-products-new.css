@@ -3,6 +3,13 @@
   background-color: #f9f9f9;
 }
 
+.featured-products .page-width {
+  max-width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+
 .featured-products__header {
   display: flex;
   justify-content: center ;
@@ -31,6 +38,16 @@
   background-color: #005bb5;
 }
 
+.featured-products__grid {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.featured-products__grid .grid__item {
+  display: flex;
+}
+
 .featured-products__list {
   display: grid;
   gap: 1rem;
@@ -46,8 +63,7 @@
   text-align: center;
   position: relative;
   opacity: 0;           
-  transform: translateY(20px); 
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition: opacity 0.5s ease, transform 1s ease;
 }
 
 .featured-products__item:hover {

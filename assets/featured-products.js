@@ -5,7 +5,7 @@ class FeaturedProducts extends HTMLElement {
     this.sectionId = this.dataset.sectionId;
     this.sectionUrl = this.dataset.sectionUrl;
 
-    // Ловимо кліки на кнопки Add to cart у секції
+    // Catch clicks on Add to Cart buttons inside this section
     this.addEventListener("click", (e) => {
       const btn = e.target.closest("[data-add-to-cart]");
       if (!btn) return;
@@ -18,7 +18,7 @@ class FeaturedProducts extends HTMLElement {
 
   async addToCart(variantId) {
     try {
-      // Додаємо товар у кошик через Shopify AJAX API
+      // Add product to cart using Shopify AJAX API
       const response = await fetch("/cart/add.js", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -27,13 +27,16 @@ class FeaturedProducts extends HTMLElement {
 
       const data = await response.json();
 
-      // Оновлюємо Drawer / попап кошика (Dawn)
+      // Update the cart drawer (Dawn theme)
       const cartDrawer = document.querySelector("cart-drawer");
       if (cartDrawer && cartDrawer.renderContents) {
         cartDrawer.renderContents();
       }
 
-      // Оновлюємо секцію Featured Products
+      // Update cart counter bubble in the header
+      this.updateCartBubble();
+
+      // Update the Featured Products section
       this.updateSection();
 
     } catch (error) {
@@ -43,7 +46,7 @@ class FeaturedProducts extends HTMLElement {
 
   async updateSection() {
     try {
-      // Section Rendering API: запитуємо оновлений HTML секції
+      // Section Rendering API: fetch updated section HTML
       const url = `${this.sectionUrl}?section_id=${this.sectionId}`;
       const response = await fetch(url);
       const html = await response.text();
@@ -59,7 +62,42 @@ class FeaturedProducts extends HTMLElement {
       console.error("Section update failed", error);
     }
   }
+
+  async updateCartBubble() {
+    try {
+      // Load updated header HTML
+      const response = await fetch(`/cart?section_id=header`);
+      const html = await response.text();
+
+      const temp = document.createElement("div");
+      temp.innerHTML = html;
+
+      // New bubble element
+      const newBubble = temp.querySelector('.cart-count-bubble');
+      // Current bubble element
+      const currentBubble = document.querySelector('.cart-count-bubble');
+
+      // If the updated header does not contain a bubble (cart = 0) — remove it
+      if (!newBubble) {
+        if (currentBubble) currentBubble.remove();
+        return;
+      }
+
+      // If bubble didn't exist before — insert new one
+      if (!currentBubble) {
+        const cartLink = document.querySelector('a[href="/cart"], a[href="/cart"]');
+        if (cartLink) cartLink.appendChild(newBubble);
+        return;
+      }
+
+      // Replace inner HTML of the existing bubble
+      currentBubble.innerHTML = newBubble.innerHTML;
+
+    } catch (error) {
+      console.error("Cart bubble update failed", error);
+    }
+  }
 }
 
-// Реєструємо Web Component
+// Register Web Component
 customElements.define("featured-products", FeaturedProducts);
