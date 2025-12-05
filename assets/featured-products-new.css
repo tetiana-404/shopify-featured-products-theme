@@ -1,0 +1,128 @@
+.featured-products {
+  padding: 2rem 1rem;
+  background-color: #f9f9f9;
+}
+
+.featured-products__header {
+  display: flex;
+  justify-content: center ;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.featured-products__title {
+  font-weight: 900;
+  text-align:center;
+  color:#656874;
+}
+
+.featured-products__button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #0071e3;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.featured-products__button:hover {
+  background-color: #005bb5;
+}
+
+.featured-products__list {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+}
+
+.featured-products__item {
+  background: #fff;
+  overflow: hidden;
+  display: flex;
+  justify-content:center;
+  flex-direction: column;
+  text-align: center;
+  position: relative;
+  opacity: 0;           
+  transform: translateY(20px); 
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.featured-products__item:hover {
+  transform: translateY(-2px);
+}
+
+.featured-products__link {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex: 1;
+  padding: 1rem;
+}
+
+.featured-products__image {
+  width: 100%;
+  height: auto;
+  margin-bottom: 0.5rem;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.featured-products__name {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.featured-products__price {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.featured-products__add-to-cart {
+  background-color: #464B90;
+  color: #fff;
+  border: none;
+  display:flex;
+  justify-content:center;
+  padding: 1.5rem 1rem;
+  font-weight: 500;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: 60%;
+}
+
+.featured-products__add-to-cart:hover {
+  background-color: #005bb5;
+}
+
+.featured-products__add-to-cart:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Адаптивність */
+@media (max-width: 768px) {
+  .featured-products__title {
+    font-size: 1.5rem;
+  }
+  .featured-products__list {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .featured-products__title {
+    font-size: 1.25rem;
+  }
+  .featured-products__button {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+}
